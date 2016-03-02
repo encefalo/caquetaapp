@@ -1,0 +1,30 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Mensaje</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeMessage()">Cerrar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Nombre" ng-model="message.nameUser">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Télefono" ng-model="message.phone">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Correo eléctronico" ng-model="message.email">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Ciudad" ng-model="message.city">
+      </label>
+      <label class="item item-input">
+        <textarea placeholder="Mensaje" ng-model="message.body"></textarea>
+      </label>
+      <label class="item">
+        <button class="button button-block button-positive" type="submit" ng-click="doMessage()">Enviar mensaje</button>
+      </label>
+    </div>
+  </ion-content>
+</ion-modal-view>

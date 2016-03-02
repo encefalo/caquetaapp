@@ -1,0 +1,47 @@
+<ion-view view-title="{{ navTitle }}">
+  <ion-header-bar class="bar bar-subheader custom-subheader">
+    <i class="icon ion-images placeholder-icon"></i><h1 class="center title">Multimedia</h1>
+  </ion-header-bar>
+  <ion-content class="has-tabs has-subheader">
+    <div class="list list-inset">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Municipios
+        </div>
+        <select ng-model="search">
+          <option value="" selected="true">Todos</option>
+          <option>San Vicente del Caguán</option>
+          <option>Solano</option>
+          <option>Belén de los Andaquies</option>
+          <option>San José del Fragua</option>
+          <option>Albania</option>
+          <option>Cartagena del Chairá</option>
+          <option>Curillo</option>
+          <option>El Doncello</option>
+          <option>El Paujil</option>
+          <option>Florencia</option>
+          <option>La Montañita</option>
+          <option>Morelia</option>
+          <option>Puerto Milán</option>
+          <option>Puerto Rico</option>
+          <option>Solano</option>
+          <option>Solita</option>
+          <option>Valparaíso</option>
+        </select>
+      </label>
+    </div>
+    <ion-list class="list-card">
+      <ion-item ng-repeat="multimedia in multimedias | filter:search">
+        <a href="#/app/multimedia/{{ multimedia.nid }}">
+          <div class="item item-image">
+          <img ng-src="{{ multimedia.pic }}"/>
+        </div>
+        <div ng-repeat="municipalities in multimedia.municipalities">
+          {{ municipalities }}
+        </div>
+        <div class="title"><i class="ion-images"></i>{{ multimedia.title }}</div>
+        </a>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

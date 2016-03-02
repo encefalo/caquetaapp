@@ -1,0 +1,29 @@
+<ion-modal-view view-title="{{ navTitle }}">
+  <ion-header-bar class="bar bar-subheader custom-subheader">
+    <h1 class="title center padding">Inicio Sesión</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Cerrar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Nombre de usuario" ng-model="loginData.username">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Contraseña" ng-model="loginData.password">
+      </label>
+      <label class="item">
+        <button class="button button-block button-positive" type="submit" ng-click="doLogin()">Iniciar Sesión</button>
+      </label>
+    </div>
+    <div class="resgister">
+      Aun no soy usuario,<a class="register-link" ng-click="register()">Registrarme</a></br>
+      <button class="facebook">Iniciar sesión con Facebook</button></br>
+      <button class="google" ng-click="googleLogin()">Iniciar sesión con G+</button></br>
+      </br>
+      </br>
+      <a class="button button-clear" href="#/app/browse">Saltar</a>
+    </div>
+  </ion-content>
+</ion-modal-view>

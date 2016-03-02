@@ -1,0 +1,28 @@
+<ion-view view-title="{{ navTitle }}">
+  <ion-content class="has-tabs has-header">
+      <ion-list>
+        <ion-item menu-close href="#/app/playlists" class="home close-tome-menu">
+          <img src="img/icon_pin_black.png" class="icon-menu"><p class="front-menu">Que hay cerca de mi</p>
+        </ion-item>
+        <ion-item menu-close href="#/app/touristics" class="home turistic-menu">
+          <img src="img/icon_man_black.png" class="icon-menu"><p class="front-menu">Destinos turisticos</p>
+        </ion-item>
+        <ion-item menu-close href="#/app/events" class="home event-menu">
+          <img src="img/icon_calendar_black.png" class="icon-menu"><p class="front-menu">Eventos</p>
+        </ion-item>
+        <ion-item menu-close href="#/app/multimedia" class="home multimedia-menu">
+          <img src="img/icon_video_black.png" class="icon-menu"><p class="front-menu">Multimedia</p>
+        </ion-item>
+        <ion-item menu-close href="#/app/directories" class="home directory-menu">
+          <img src="img/icon_notebook_black.png" class="icon-menu"><p class="front-menu">Directorio Empresarial</p>
+        </ion-item>
+        <ion-item menu-close class="home" href="#" ng-click="openLink('http://caqueta.travel')">
+          <i class="icon ion-bookmark"></i><p class="front-menu">Caquetá Travel</p>
+        </ion-item>
+        <a href="{{pauta.link}}" class="pauta-home">
+          <img ng-src="{{ pauta.image }}">
+        </a>
+        <div class="padding"></div>
+      </ion-list>
+    </ion-content>
+</ion-view>

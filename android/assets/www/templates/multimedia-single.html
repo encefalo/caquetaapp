@@ -1,0 +1,15 @@
+<ion-view view-title="{{ navTitle }}">
+  <ion-header-bar class="bar bar-subheader custom-subheader">
+    <i class="icon ion-images placeholder-icon"></i><h1 class="center title">Multimedia</h1>
+  </ion-header-bar>
+  <ion-content class="has-tabs has-subheader">
+    <div class="item item-divider center">
+      Galeria
+    </div>
+    <a class="item item-list-detail">
+      <ion-scroll direction="x">
+        <img ng-repeat="image in detail.gallery" ng-src="{{ image }}" ng-click="showImages($index)" class="image-list-thumb"/>
+      </ion-scroll>
+    </a>
+  </ion-content>
+</ion-view>

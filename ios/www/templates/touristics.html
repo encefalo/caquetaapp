@@ -1,0 +1,55 @@
+<ion-view view-title="{{ navTitle }}" >
+  <ion-header-bar class="bar-subheader custom-subheader bar">
+    <i class="icon ion-paper-airplane placeholder-icon"></i><h1 class="center title">Destinos turisticos</h1>
+  </ion-header-bar>
+  <ion-content class="has-subheader has-tabs">
+    <div class="list list-inset hidden">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Rios, Cascadas, parques naturales" ng-model="search">
+      </label>
+    </div>
+    <div class="row">
+      <div class="col col-50">
+        <label class="item item-input item-select">
+          <div class="input-label">
+
+          </div>
+          <select ng-model="search">
+            <option value="" selected="true">Todos</option>
+            <option>Cascadas</option>
+            <option>Parque Nacional</option>
+            <option>Reservas</option>
+          </select>
+        </label>
+      </div>
+      <div class="col col-50">
+        <label class="item item-input item-select">
+          <div class="input-label">
+
+          </div>
+          <select ng-model="search">
+            <option value="" selected="true">Todos</option>
+            <option>Canotaje</option>
+            <option>Espelismo</option>
+            <option>Canopi</option>
+            <option>Cabalgata</option>
+            <option>Caminata</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <ion-list>
+      <ion-item ng-repeat="touristic in touristics | filter:search" href="#/app/touristics/{{ touristic.nid }}" class="item-thumbnail-left item card-item">
+        <img ng-src="{{ touristic.pic }}"/>
+        <h2>{{ touristic.title }}</h2>
+        <h3 ng-if="touristic.address.length > 0">{{ touristic.address }}</h3>
+        <h3> {{ touristic.company[0] }} </h3>
+        <p class="description"> {{ touristic.description }} </p>
+        <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+        <p class="comments subdued">{{ touristic.comments }} comentarios</p>
+      </ion-item>
+    </ion-list>
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-view>

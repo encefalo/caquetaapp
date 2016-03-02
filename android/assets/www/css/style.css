@@ -1,0 +1,230 @@
+/* Empty. Add your own CSS if you like */
+
+/**
+ * Home
+ */
+.home a i,.home a p{
+  color: #222;
+  font-size: 25px;
+}
+
+.pauta-home img{
+  width: 100%;
+  height: auto;
+}
+
+/**
+ * Menu
+ */
+.left-menu-custom p{
+  font-size: 17px !important;
+}
+
+.left-menu-custom i {
+  height: 80px;
+  font-size: 35px;
+  text-align: center;
+}
+
+.front-menu{
+  float: right;
+  width: 80%;
+  line-height: 40px;
+  font-size: 100% !important;
+  padding-top: 4%;
+}
+
+/**
+ * Heading
+ */
+.custom-subheader i{
+  font-size: 40px;
+  line-height: 40px;
+  display: inline-block;
+  float: left;
+  padding-left: 20px;
+  margin: 0px;
+}
+.custom-subheader h1{
+  font-size: 30px;
+  line-height: 30px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}
+/**
+ * Globals
+ */
+.left{
+  float: left;
+}
+.list .item .item-content, .item{
+  font-size: 22px;
+}
+.content-custom .list-inset{
+  margin: 0px 10px;
+}
+
+
+.nav-bar-block .bar-header{
+  /*background-image: url('../img/bg-cabecera.png') !important;*/
+  background: #0271b7;
+  color:#fff;
+  z-index: 2 !important;
+  font-size: 1.3em;
+  width: 100%;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+
+.menu .bar.bar-header {
+  background-image: url('../img/menu.jpg') !important;
+  background-size: 120%;
+  background-position: 0%;
+  transition: all .5s ease-in-out;
+}
+
+.bar-light .button {
+  border-color: transparent;
+  background-color: transparent;
+  color: #fff;
+}
+
+.tabs-bottom .ion-star,.tabs-bottom  .ion-map,.tabs-bottom .ion-chatbubbles, .tabs-bottom .ion-navigate{
+  color: #222;
+}
+
+.bar-light .button.button-clear {
+  color: #fff;
+}
+
+.button-cabecera{
+  float: right;
+  margin-right: 20px;
+  top: 0px;
+  border-radius: 50%;
+  color: #fff;
+  right: 5px;
+  bottom: auto;
+  left: auto;
+  position: absolute;
+  z-index: 9999;
+}
+.hidden{
+  display: none;
+}
+/**
+ * Icons
+ */
+#fab-activity{
+  background: #FFA500;
+}
+
+#fab-closetome{
+  background: #b63583;
+}
+
+#fab-events{
+  background: #329eda;
+}
+
+#fab-multimedia{
+  background: #9cb832;
+}
+
+.right-buttons a.button{
+  font-size: 34px;
+}
+ion-view.pane{
+    background-color: #e9e9e9;
+}
+
+/* Login */
+.resgister{
+  text-align: center;
+}
+
+.separate{
+  height: 50px;
+}
+
+
+/* typo */
+.description, .comments{
+  font-size: 15px;
+  white-space: normal;
+}
+
+.center{
+  text-align: center;
+  margin: 0 auto;
+}
+
+/*
+ * Gallery
+ */
+.image-list-thumb {
+  padding: 2px 2px 2px 2px;
+  height: 150px;
+}
+
+.image-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+.transparent {
+  background: rgba(0,0,0,0.7);
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 600px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center, center;
+}
+
+img.icon-menu {
+  height: 19%;
+  width: 15%;
+  padding: 0;
+  padding-top: 2%;
+  margin: 0;
+}
+p.front-menu {
+  margin-left: 10px;
+  color: #fff;
+}
+
+.home-menu a{
+  background-image: url('../img/bg_dark.jpg') !important;
+}
+.close-tome-menu a{
+ background-image: url('../img/bg_green.jpg') !important;
+}
+.turistic-menu a{
+ background-image: url('../img/bg_blue.jpg') !important;
+}
+
+.event-menu a{
+ background-image: url('../img/bg_orange.jpg') !important;
+}
+
+.multimedia-menu a{
+ background-image: url('../img/bg_dark_green.jpg') !important;
+}
+
+.directory-menu a{
+ background-image: url('../img/bg_yellow.jpg') !important;
+}
+
+.ionic_ratings .icon {
+    float: left;
+  }

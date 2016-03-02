@@ -1,0 +1,35 @@
+<ion-view view-title="{{ navTitle }}">
+  <ion-content class="padding">
+    <div class="list list-inset">
+      <label class="item item-input item-select">
+        <div class="input-label">
+
+        </div>
+        <select ng-model="search">
+          <option value="" selected="true">Todos</option>
+          <option>Hoteles</option>
+          <option>Agencias</option>
+          <option>Restaurantes</option>
+          <option>Gasolineras</option>
+          <option>Tiendas de souv</option>
+          <option>Rios</option>
+          <option>Cascadas</option>
+          <option>Piscinas</option>
+          <option>Parques Naturales</option>
+          <option>Reservas</option>
+        </select>
+      </label>
+    </div>
+    <ion-list>
+      <ion-item ng-if="favorite.length > 0" ng-repeat="favorites in favorite | filter:search" href="#/app/search/{{ favorites.nid }}" class="item-thumbnail-left item card-item">
+        <img ng-src="{{ favorites.image }}"/>
+        <h2>{{ favorites.title }}</h2>
+        <p class="padding" ng-bind-html="favorites.description"></p>
+      </ion-item>
+    </ion-list>
+    <div ng-if="favorites.length == 0">
+        <p class="padding center">No tienes Favoritos aún</p>
+    </div>
+
+  </ion-content>
+</ion-view>

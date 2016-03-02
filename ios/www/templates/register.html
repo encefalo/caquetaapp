@@ -1,0 +1,34 @@
+<ion-view view-title="{{ navTitle }}">
+  <ion-header-bar class="bar bar-subheader custom-subheader">
+    <h1 class="title center padding">Registro de usuario</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="login()">Atras</button>
+    </div>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Nombre de usuario" ng-model="registerData.usuario">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="e-mail" ng-model="registerData.mail">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Contraseña" ng-model="registerData.pass">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Confirme Contraseña" ng-model="registerData.confirmPass">
+      </label>
+      <label class="item">
+        <button class="button button-block button-positive" type="submit" ng-click="doRegister()">Registrar</button>
+      </label>
+    </div>
+    <div class="resgister">
+      <a class="facebook">Iniciar sesión con Facebook</a></br>
+      <a class="google">Iniciar sesión con G+</a></br>
+      </br>
+      </br>
+      <a class="button button-clear" href="#/app/browse">Saltar</a>
+    </div>
+  </ion-content>
+</ion-modal-view>

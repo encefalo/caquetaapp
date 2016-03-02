@@ -1,0 +1,14 @@
+<ion-view view-title="{{ navTitle }}" >
+  <ion-header-bar class="bar-subheader custom-subheader bar">
+    <i class="icon ion-location placeholder-icon"></i><h1 class="center title">Comentarios</h1>
+  </ion-header-bar>
+  <ion-content class="has-subheader has-tabs">
+    <ion-list>
+      <ion-item ng-repeat="lists in list" class="item-thumbnail-left item card-item">
+        <img ng-if="lists.subject > 1" ng-src="{{ lists.subject }}"/>
+      </ion-item>
+    </ion-list>
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-view>
+

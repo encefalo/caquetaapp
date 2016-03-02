@@ -1,0 +1,40 @@
+<ion-view view-title="{{ navTitle }}" >
+  <ion-header-bar class="bar-subheader custom-subheader bar">
+    <i class="icon ion-document-text placeholder-icon"></i><h1 class="center title">Directorio Empresarial</h1>
+  </ion-header-bar>
+  <ion-content class="has-subheader has-tabs">
+    <div class="list list-inset">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Servicio
+        </div>
+        <select ng-model="search">
+          <option value="" selected="true">Todos</option>
+          <option>Hospitales</option>
+          <option>Clinicas</option>
+          <option>Policia y Ejercito</option>
+          <option>Bomberos</option>
+          <option>Hoteles</option>
+          <option>Agencias</option>
+          <option>Restaurantes</option>
+          <option>Gasolineras</option>
+          <option>Tiendas Souv</option>
+          <option>Piscinas</option>
+          <option>Guía Turisticos</option>
+        </select>
+      </label>
+    </div>
+    <ion-list>
+      <ion-item ng-repeat="directory in list | filter:search" href="#/app/directories/{{ directory.nid }}" class="item-avatar-left item">
+        <img ng-src="{{ directory.pic }}" class="fullscreen-image"/>
+        <h2>{{ directory.title }}</h2>
+        <h3>{{ directory.address }}</h3>
+        <span>{{ directory.city }}</span>
+        <h4> {{ details.company[0] }} </h4>
+        <p> {{ directory.description }} </p>
+        <p class="comments subdued">{{ directory.comments }} comentarios</p>
+      </ion-item>
+    </ion-list>
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-view>

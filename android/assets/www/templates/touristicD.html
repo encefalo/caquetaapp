@@ -1,0 +1,44 @@
+<ion-view view-title="{{ navTitle }}">
+  <ion-header-bar class="bar bar-subheader custom-subheader">
+    <i class="icon ion-paper-airplane placeholder-icon"></i><h1 class="center title">{{ detail.title }}</h1>
+  </ion-header-bar>
+  <ion-content class="has-subheader has-tabs">
+    <ion-item class="item-thumbnail-left item card-item">
+      <img ng-src="{{ detail.pic }}" class="fullscreen-image"/>
+      <h2>{{ detail.title }}</h2>
+      <span ng-if="detail.address.length > 0">{{ detail.address }}</span>
+      <span>{{ detail.mapa['address'] }}</span>
+      <div>
+        <button ng-click="message()" class="ion-email"></button>
+        <button ng-click="window.plugins.socialsharing.share(detail.title , 'Te comparto caquetá turistica', null, null)"><i class="ion-android-share-alt"></i></button>
+        <button ng-click="window.plugins.socialsharing.canShareVia('whatsapp', detail.title, file, url, [success], [error]);" class="ion-social-whatsapp"></button>
+      </div>
+      <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+    </ion-item>
+    <p class="padding" ng-bind-html="detail.description"></p>
+    <ion-item ng-repat="comment in detail.comments">
+      <h2 class="center">Comentarios</h2>
+      <div class="col col-75">{{ comment }}</div>
+    </ion-item>
+    <a class="item item-list-detail">
+      <ion-scroll direction="x">
+        <img ng-repeat="image in detail.gallery" ng-src="{{ image }}" ng-click="showImages($index)" class="img-gallery"/>
+      </ion-scroll>
+    </a>
+    <div class="col col-100">
+      <h2 class="center">Comentar</h2>
+      <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Asunto" ng-model="contact.subject">
+      </label>
+      <label class="item item-input">
+        <textarea placeholder="Mensaje" ng-model="contact.comment"></textarea>
+      </label>
+      <label class="item">
+        <button class="button button-block button-positive" type="submit" ng-click="doComment({{ detail.nid }})">Enviar mensaje</button>
+      </label>
+    </div>
+    <div class="separate"></div>
+  </ion-content>
+</ion-view>
+
