@@ -53,10 +53,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   $scope.accessToken = $rootScope.accessToken;
   // Open the login modal
   $scope.login = function(){
-    $scope.accessToken = $rootScope.accessToken;
-    if ($scope.accessToken == undefined){
-      $scope.modal.show();
-    };
+    $scope.modal.show();
   };
 
   // Open the register modal
@@ -88,9 +85,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
                 data: { 'username': $scope.loginData.username,
                         'password': $scope.loginData.password
                       }
-              }
-    $http(req)
-    .success(function(data) {
+              };
+    $http(req).success(function(data) {
       $rootScope.accessToken = data.token;
       $rootScope.sessid = data.sessid;
       $rootScope.uid = data.user.uid;
@@ -101,8 +97,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       $state.go('app.favorites');
       $scope.closeLogin();
 
-    })
-    .error(function(data, status) {
+    }).error(function(data, status) {
       console.log("ERROR: " + data);
       var alertPopup = $ionicPopup.alert({
         title: 'Inicio de sesión fallido',
@@ -128,8 +123,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       maxWidth: 200,
       showDelay: 0
     });
-    console.log($scope.registerData.usuario);
-    console.log($scope.registerData.mail);
     if($scope.registerData.pass == $scope.registerData.confirmPass){
       var req = {
                 method: 'post',
@@ -139,17 +132,15 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
                 },
                     "name"    : $scope.registerData.usuario,
                     "password": $scope.registerData.pass,
-                    "mail"    : $scope.registerData.mail
-              }
-      console.log(req);
+                    "mail"    : $scope.registerData.mail,
+              };
       $http(req).success(function(data) {
         var alertPopup = $ionicPopup.alert({
             title: 'Registro éxitoso',
             template: 'Bienvenido ' + $scope.registerData.usuario
           });
         $scope.closeRegister();
-      })
-      .error(function(data, status) {
+      }).error(function(data, status) {
         console.log(data);
         var alertPopup = $ionicPopup.alert({
           title: 'Registro fallido',
@@ -158,7 +149,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       });
     }
     // code if using a login system
-    $timeout(function() {
+    $timeout(function(){
       $ionicLoading.hide();
       $scope.closeLogin();
     }, 1000);
@@ -169,7 +160,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       ["https://www.googleapis.com/auth/urlshortener",
       "https://www.googleapis.com/auth/userinfo.email"]).then(function(result) {
         console.log(JSON.stringify(result));
-    }, function(error) {
+    }, function(error){
         console.log(error);
     });
   };
@@ -194,15 +185,13 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
                       }
                   }
                 }
-              }
-    console.log(req);
+              };
     $http(req).success(function(data) {
       var alertPopup = $ionicPopup.alert({
         title: 'Contacto',
         template: 'Su mensaje ha sido enviado correctamente'
       });
-    })
-    .error(function(data, status) {
+    }).error(function(data, status) {
       console.log("ERROR: " + data);
       var alertPopup = $ionicPopup.alert({
         title: 'Contacto',
@@ -236,7 +225,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
                         "nid": nid,
                         "uid": this.uid
                       }
-              }
+              };
       $http(req).success(function(data) {
         var alertPopup = $ionicPopup.alert({
           title: 'Comentario enviado',
@@ -251,11 +240,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       });
     }else{
       $scope.modal.show();
-    };
+    }
   };
-  $scope.favorites = true;
+  //$scope.favorites = true;
   $scope.favorites = function(titleE, nidE,descriptionE, imageE){
-    if($scope.accessToken != undefined){
+    if($scope.accessToken !== undefined){
       $scope.favorite.push({
         title: titleE,
         nid: nidE,
@@ -266,7 +255,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
         title: 'Se agrego un nuevo favorito',
         template: titleE + ' ha sido agregado a sus favoritos'
       });
-      console.log($scope.favorite);
     }else{
       $scope.modal.show();
     }
@@ -285,10 +273,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     });
 })
 
-.controller('FavoritesCtrl', function($scope, $http, $rootScope){
-  $scope.favorite;
-})
-
 .controller('PlaylistsCtrl', function($scope, $http, $cordovaGeolocation) {
   $scope.ratingsObject = {
     iconOn : 'ion-ios-star',
@@ -296,7 +280,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     iconOnColor: 'rgb(200, 200, 100)',
     iconOffColor:  'rgb(200, 100, 100)',
     rating:  0,
-    minRating:0,
+    minRating:1,
+    readOnly: true, //Optional
     callback: function(rating) {
       $scope.ratingsCallback(rating);
     }
@@ -476,8 +461,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     iconOff : 'ion-ios-star-outline',
     iconOnColor: 'rgb(200, 200, 100)',
     iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
+    //rating:  0,
+    //minRating:0,
     callback: function(rating) {
       $scope.ratingsCallback(rating);
     }

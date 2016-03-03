@@ -52,6 +52,10 @@
   white-space:nowrap;
   text-overflow: ellipsis;
 }
+
+ion-header-bar.bar-light.bar.bar-header {
+    background-image: url('../img/menu.jpg') !important;
+}
 /**
  * Globals
  */
@@ -227,4 +231,14 @@ p.front-menu {
 
 .ionic_ratings .icon {
     float: left;
-  }
+}
+
+body.platform-ready h2.ng-binding, body.platform-ready span.ng-binding,
+.list .item-content h3, .item.item-input.item-select .input-label{
+  text-overflow: initial !important;
+  white-space: normal !important;
+}
+
+p.front-menu.caqueta-travel{
+  color:#000;
+}

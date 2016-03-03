@@ -5,7 +5,7 @@
   <ion-content class="has-subheader has-tabs">
     <ion-item class="item-thumbnail-left item card-item">
       <img ng-src="{{ detail.pic }}" class="fullscreen-image"/>
-      <h2>{{ detail.title }}</h2>
+      <h2 ng-bind-html="detail.title"></h2>
       <span>{{ detail.address }}</span>
       <span>{{ detail.mapa['address'] }}</span>
       <div>

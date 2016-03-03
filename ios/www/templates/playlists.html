@@ -12,27 +12,34 @@
     <div class="list list-inset">
       <label class="item item-input item-select">
         <div class="input-label">
-
+          Tipo de empresa
         </div>
         <select ng-model="search">
           <option value="" selected="true">Todos</option>
-          <option>Hoteles</option>
           <option>Agencias</option>
+          <option>Artesanías</option>
+          <option>Autobuses turísticos</option>
+          <option>Centros educativos</option>
+          <option>Centros espirituales</option>
+          <option>Entidades de salud</option>
+          <option>Entidades gubernamentales</option>
+          <option>Ferry</option>
+          <option>Fincas</option>
+          <option>Fuerzas militares</option>
+          <option>Guías</option>
+          <option>Hoteles</option>
+          <option>Museo</option>
+          <option>Productos alimenticios</option>
           <option>Restaurantes</option>
-          <option>Gasolineras</option>
-          <option>Tiendas de souv</option>
-          <option>Rios</option>
-          <option>Cascadas</option>
-          <option>Piscinas</option>
-          <option>Parques Naturales</option>
-          <option>Reservas</option>
+          <option>Salones de eventos</option>
+          <option>Souvenirs y recuerdos</option>
         </select>
       </label>
     </div>
     <ion-list>
       <ion-item ng-repeat="playlist in playlists | filter:search" href="#/app/playlists/{{ playlist.nid }}" class="item-thumbnail-left item card-item">
         <img ng-if="playlist.pic.length > 1" ng-src="{{ playlist.pic }}"/>
-        <h2 ng-if="playlist.title.length > 1">{{ playlist.title }}</h2>
+        <h2 ng-bind-html="detail.title"></h2>
         <h3 ng-if="playlist.address.length > 1">{{ playlist.address }}</h3>
         <h3 ng-if="playlist.company[0].length > 1"> {{ playlist.company[0] }} </h3>
         <p class="description" ng-if="playlist.description.length > 1"> {{ playlist.description }} </p>
