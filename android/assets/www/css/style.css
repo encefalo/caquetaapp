@@ -54,7 +54,13 @@
 }
 
 ion-header-bar.bar-light.bar.bar-header {
-    background-image: url('../img/menu.jpg') !important;
+    background-color: #000;
+    /*url('../img/menu.jpg') !important;*/
+}
+img.avatar.motion.spin.fade{
+  max-width: 100%;
+  display: block;
+  height: auto;
 }
 /**
  * Globals
@@ -233,12 +239,20 @@ p.front-menu {
     float: left;
 }
 
-body.platform-ready h2.ng-binding, body.platform-ready span.ng-binding,
+body.platform-ready h2.ng-binding, body.platform-ready h3.ng-binding,
 .list .item-content h3, .item.item-input.item-select .input-label{
   text-overflow: initial !important;
   white-space: normal !important;
 }
 
+.item.item-input.item-select{
+  height: 30px;
+}
+
 p.front-menu.caqueta-travel{
   color:#000;
+}
+
+.filters-custom{
+  margin:0;
 }

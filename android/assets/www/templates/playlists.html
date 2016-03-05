@@ -3,17 +3,11 @@
     <i class="icon ion-location placeholder-icon"></i><h1 class="center title">Que hay cerca de mi</h1>
   </ion-header-bar>
   <ion-content class="has-subheader has-tabs">
-    <div class="list list-inset hidden">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Hoteles, Agencias, restaurantes" ng-model="search">
-      </label>
+    <div class="item item-divider">
+      <h2 class="center">Tipo de empresa</h2>
     </div>
-    <div class="list list-inset">
+    <div class="list list-inset filters-custom">
       <label class="item item-input item-select">
-        <div class="input-label">
-          Tipo de empresa
-        </div>
         <select ng-model="search">
           <option value="" selected="true">Todos</option>
           <option>Agencias</option>
@@ -39,12 +33,13 @@
     <ion-list>
       <ion-item ng-repeat="playlist in playlists | filter:search" href="#/app/playlists/{{ playlist.nid }}" class="item-thumbnail-left item card-item">
         <img ng-if="playlist.pic.length > 1" ng-src="{{ playlist.pic }}"/>
-        <h2 ng-bind-html="detail.title"></h2>
+        <h2 ng-bind-html="playlist.title"></h2>
         <h3 ng-if="playlist.address.length > 1">{{ playlist.address }}</h3>
         <h3 ng-if="playlist.company[0].length > 1"> {{ playlist.company[0] }} </h3>
         <p class="description" ng-if="playlist.description.length > 1"> {{ playlist.description }} </p>
         <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
         <p class="comments subdued">{{ playlist.comments }} comentarios</p>
+        <p class="hidden"> {{ playlist.description }} </p>
       </ion-item>
     </ion-list>
     </ion-infinite-scroll>

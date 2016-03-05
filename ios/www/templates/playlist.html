@@ -1,12 +1,12 @@
 <ion-view view-title="{{ navTitle }}">
   <ion-header-bar class="bar bar-subheader custom-subheader">
-    <i class="icon ion-location placeholder-icon"></i><h1 class="center title">{{ detail.title }}</h1>
+    <i class="icon ion-location placeholder-icon"></i><h1 class="center title">Que hay cerca de mi</h1>
   </ion-header-bar>
   <ion-content class="has-subheader has-tabs">
     <ion-item class="item-thumbnail-left item card-item">
       <img ng-src="{{ detail.pic }}" class="fullscreen-image"/>
       <h2 ng-bind-html="detail.title"></h2>
-      <span>{{ detail.address }}</span>
+      <h3>{{ detail.address }}</h3>
       <span>{{ detail.mapa['address'] }}</span>
       <div>
         <button ng-click="message()" class="ion-email"></button>

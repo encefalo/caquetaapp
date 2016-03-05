@@ -6,9 +6,6 @@
     <div class="row">
       <div class="col col-50">
         <label class="item item-input item-select">
-          <div class="input-label">
-
-          </div>
           <select ng-model="search">
             <option value="" selected="true">Todos</option>
             <option>Agroturismo</option>
@@ -47,9 +44,6 @@
       </div>
       <div class="col col-50">
         <label class="item item-input item-select">
-          <div class="input-label">
-
-          </div>
           <select ng-model="search">
             <option value="" selected="true">Todos</option>
             <option>Cultura</option>
@@ -63,10 +57,13 @@
     </div>
     <ion-list>
       <ion-item ng-repeat="touristic in touristics | filter:search" href="#/app/touristics/{{ touristic.nid }}" class="item-thumbnail-left item card-item">
+      {{ touristic.address[0] }}
         <img ng-src="{{ touristic.pic }}"/>
         <h2>{{ touristic.title }}</h2>
-        <h3 ng-if="touristic.address.length > 0">{{ touristic.address }}</h3>
+        <h3 ng-if="touristic.address[0].length > 0">{{ touristic.address[0] }}</h3>
         <h3> {{ touristic.company[0] }} </h3>
+        <p class="hidden">{{ touristic.activity }}</p>
+        <p class="hidden">{{ touristic.atractivo }}</p>
         <p class="description"> {{ touristic.description }} </p>
         <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
         <p class="comments subdued">{{ touristic.comments }} comentarios</p>

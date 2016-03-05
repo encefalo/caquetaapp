@@ -11,9 +11,6 @@
     </div>
     <div class="list list-inset">
       <label class="item item-input item-select">
-        <div class="input-label">
-
-        </div>
         <select ng-model="search">
           <option value="" selected="true">Todos</option>
           <option>Enero</option>
@@ -38,8 +35,8 @@
         <h3 ng-if="event.address.length > 0">{{ event.address }}</h3>
         <h3> {{ event.company[0] }} </h3>
         <p class="description"> {{ event.description }} </p>
+        <h3 class="moment" ng-bind-html="event.date"></h3>
         <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
-        <div class="moment">{{touristic.date}}</div>
         <p class="comments subdued">{{ event.comments }} comentarios</p>
       </ion-item>
     </ion-list>
