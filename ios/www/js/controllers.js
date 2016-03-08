@@ -35,6 +35,15 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   }).then(function(modalRegister) {
     $scope.modalRegister = modalRegister;
   });
+
+  // set the rate and max variables
+  $scope.rate = 0;
+  $scope.max = 5;
+
+  $scope.$watch('data.rating', function() {
+    console.log('New value: '+$scope.data.rating);
+  });
+
   // Triggered in the message modal to close it
   $scope.closeMessage = function() {
     $scope.modalMessage.hide();
@@ -48,7 +57,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     $scope.modalRegister.hide();
   };
   // Declared header in pages
-  $scope.navTitle = '<img src="img/cabecera.png" class="avatar motion spin fade">';
+  $scope.navTitle = '<img src="img/cabecera.png" class="avatar motion spin fade center">';
 
   $scope.accessToken = $rootScope.accessToken;
   // Open the login modal
@@ -392,23 +401,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('PlaylistsCtrl', function($scope, $http, $cordovaGeolocation) {
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:1,
-    readOnly: true, //Optional
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
-
   $http.get('http://caqueta.travel/endpoint/services-experience',
     {cache:true}).then(function(response){
       $scope.playlists = {};

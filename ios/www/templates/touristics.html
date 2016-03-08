@@ -12,8 +12,9 @@
             <option>Barranquismo</option>
             <option>Buceo a pulmón</option>
             <option>Cabalgatas</option>
+            <option>Caminatas</option>
             <option>Canopy(Cable Aventura)</option>
-            <option>Conyoning</option>
+            <option>Canyoning</option>
             <option>Ciclismo todo terreno</option>
             <option>Descenso en neumático</option>
             <option>Escalada de rocas o muros</option>
@@ -46,7 +47,7 @@
         <label class="item item-input item-select">
           <select ng-model="search">
             <option value="" selected="true">Todos</option>
-            <option>Cultura</option>
+            <option>Cultural</option>
             <option>Fluvial</option>
             <option>Gastronómico</option>
             <option>Histórico</option>
@@ -65,7 +66,7 @@
         <p class="hidden">{{ touristic.activity }}</p>
         <p class="hidden">{{ touristic.atractivo }}</p>
         <p class="description"> {{ touristic.description }} </p>
-        <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+        <rating ng-model="rate" max="max"></rating>
         <p class="comments subdued">{{ touristic.comments }} comentarios</p>
       </ion-item>
     </ion-list>

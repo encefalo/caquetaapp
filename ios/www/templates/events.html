@@ -36,7 +36,7 @@
         <h3> {{ event.company[0] }} </h3>
         <p class="description"> {{ event.description }} </p>
         <h3 class="moment" ng-bind-html="event.date"></h3>
-        <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+        <rating ng-model="rate" max="max"></rating>
         <p class="comments subdued">{{ event.comments }} comentarios</p>
       </ion-item>
     </ion-list>

@@ -37,7 +37,7 @@
         <h3 ng-if="playlist.address.length > 1">{{ playlist.address }}</h3>
         <h3 ng-if="playlist.company[0].length > 1"> {{ playlist.company[0] }} </h3>
         <p class="description" ng-if="playlist.description.length > 1"> {{ playlist.description }} </p>
-        <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+        <rating ng-model="rate" max="max"></rating>
         <p class="comments subdued">{{ playlist.comments }} comentarios</p>
         <p class="hidden"> {{ playlist.description }} </p>
       </ion-item>

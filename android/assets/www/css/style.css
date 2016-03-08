@@ -87,7 +87,8 @@ img.avatar.motion.spin.fade{
 }
 
 .menu .bar.bar-header {
-  background-image: url('../img/menu.jpg') !important;
+  /*background-image: url('../img/menu.jpg') !important;*/
+  background: #0271b7;
   background-size: 120%;
   background-position: 0%;
   transition: all .5s ease-in-out;
@@ -255,4 +256,14 @@ p.front-menu.caqueta-travel{
 
 .filters-custom{
   margin:0;
+}
+
+ul.rating li {
+  display: inline;
+  border: 0px;
+  background: none;
+  padding: 5px 10px;
+}
+ul.rating li i {
+  font-size: 20px;
 }

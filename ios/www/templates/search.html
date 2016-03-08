@@ -15,7 +15,7 @@
         <h3>{{ busqueda.address }}</h3>
         <h3> {{ busqueda.company[0] }} </h3>
         <p class="description"> {{ busqueda.description }} </p>
-        <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+        <rating ng-model="rate" max="max"></rating>
         <p class="comments">{{ busqueda.comments }} comentarios</p>
       </ion-item>
     </ion-list>

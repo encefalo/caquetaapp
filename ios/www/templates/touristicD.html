@@ -14,7 +14,7 @@
         <button ng-click="window.plugins.socialsharing.canShareVia('whatsapp', detail.title, file, url, [success], [error]);" class="ion-social-whatsapp"></button>
         <button ng-click="favorites( detail.title, detail.nid, detail.description, detail.pic )"><i class="ion-star"></i></button>
       </div>
-      <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+      <rating ng-model="rate" max="max"></rating>
     </ion-item>
     <p class="padding" ng-bind-html="detail.description"></p>
     <ion-item ng-repat="comment in detail.comments">
