@@ -19,7 +19,8 @@
     <p class="padding" ng-bind-html="detail.description"></p>
     <ion-item ng-repat="comment in detail.comments">
       <h2 class="center">Comentarios</h2>
-      <div class="col col-75">{{ comment }}</div>
+      <h3 ng-bind-html="comment.title"></h2>
+      <p ng-bind-html="comment.comment"></p>
     </ion-item>
     <a class="item item-list-detail">
       <ion-scroll direction="x">

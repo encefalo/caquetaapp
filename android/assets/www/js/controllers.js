@@ -409,31 +409,20 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams, $http, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate) {
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
-
   this.id = $stateParams.playlistId;
   $scope.zoomMin = 1;
-  $http.get('http://caqueta.travel/endpoint/services-experience-detail/?args[0]='
-    + this.id,
+  $http.get('http://caqueta.travel/endpoint/services-experience-detail/?args[0]=' + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data[0];
     });
+
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
+    });
+
   $scope.zoomMin = 1;
   $scope.showImages = function(index) {
     $scope.activeSlide = index;
@@ -447,7 +436,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       $scope.modal = modal;
       $scope.modal.show();
     });
-  }
+  };
 
   $scope.closeModal = function(){
     $scope.modal.hide();
@@ -513,11 +502,19 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       $scope.detail = {};
       $scope.detail = response.data[0];
     });
+
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
+    });
+
   $scope.zoomMin = 1;
   $scope.showImages = function(index) {
     $scope.activeSlide = index;
     $scope.showModal('templates/gallery-zoomview.html');
   };
+
 
   $scope.showModal = function(templateUrl) {
     $ionicModal.fromTemplateUrl(templateUrl, {
@@ -579,7 +576,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       $scope.ratingsCallback(rating);
     }
   };
-
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
+    });
   $scope.ratingsCallback = function(rating) {
     console.log('Selected rating is : ', rating);
   };
@@ -638,49 +639,29 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('DirectoryCtrl', function($scope, $http){
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
   $http.get('http://caqueta.travel/endpoint/services-directory',
     {cache:true}).then(function(response){
       $scope.list = {};
       $scope.list = response.data;
     });
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
+    });
 })
 
 .controller('SearchCtrl', function($scope, $http){
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
   $http.get('http://caqueta.travel/endpoint/services-experience',
     {cache:true}).then(function(response){
       $scope.busquedas = {};
       $scope.busquedas = response.data;
   });
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
+    });
   $scope.zoomMin = 1;
   $scope.showImages = function(index) {
     $scope.activeSlide = index;
@@ -712,21 +693,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('SearchDCtrl', function($scope, $stateParams, $http){
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
 
   this.id = $stateParams.nid;
   console.log(this.id);
@@ -735,29 +701,20 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       $scope.detail = {};
       $scope.detail = response.data;
     });
+
 })
 
 .controller('DirectoryDCtrl', function($scope, $stateParams, $http){
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
   this.id = $stateParams.nid;
   $http.get('http://caqueta.travel/endpoint/services-directory-detail/?args[0]=' + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data[0];
+    });
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
     });
   $scope.zoomMin = 1;
   $scope.showImages = function(index) {
