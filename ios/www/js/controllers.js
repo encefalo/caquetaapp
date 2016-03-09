@@ -107,7 +107,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
     });
     var req = {
                 method: 'post',
-                url: 'http://localhost:1337/caqueta.travel/endpoint/user/login.json',
+                url: 'http://caqueta.travel/endpoint/user/login.json',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -155,7 +155,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
     if($scope.registerData.pass == $scope.registerData.confirmPass){
       var req = {
                 method: 'post',
-                url: 'http://localhost:1337/caqueta.travel/endpoint/user',
+                url: 'http://caqueta.travel/endpoint/user',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -188,7 +188,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
   $scope.doMessage = function(){
     var req = {
                 method: 'post',
-                url: 'http://localhost:1337/caqueta.travel/endpoint/submission',
+                url: 'http://caqueta.travel/endpoint/submission',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -232,7 +232,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
     if ($scope.accessToken != undefined){
       var req = {
                 method: 'post',
-                url: 'http://localhost:1337/caqueta.travel/endpoint/comment.json',
+                url: 'http://caqueta.travel/endpoint/comment.json',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -302,7 +302,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 })
 
 .controller('HomeCtrl', function($scope, $http){
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-pauta',
+  $http.get('http://caqueta.travel/endpoint/services-pauta',
     {cache:true}).then(function(response){
       $scope.pauta = {};
       $scope.pauta = response.data[0];
@@ -310,7 +310,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 })
 
 .controller('PlaylistsCtrl', function($scope, $http, $cordovaGeolocation) {
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-experience',
+  $http.get('http://caqueta.travel/endpoint/services-experience',
     {cache:true}).then(function(response){
       $scope.playlists = {};
       $scope.playlists = response.data;
@@ -319,13 +319,13 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
 .controller('PlaylistCtrl', function($scope, $stateParams, $http, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
   this.id = $stateParams.playlistId;
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-experience-detail/?args[0]=' + this.id,
+  $http.get('http://caqueta.travel/endpoint/services-experience-detail/?args[0]=' + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data[0];
     });
 
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
     $scope.detail.comments = {};
     $scope.detail.comments = response.data[0];
   });
@@ -359,7 +359,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 })
 
 .controller('TouristicCtrl', function($scope, $http){
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-know',
+  $http.get('http://caqueta.travel/endpoint/services-know',
     {cache:true}).then(function(response){
       $scope.touristics = {};
       $scope.touristics = response.data;
@@ -368,12 +368,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
 .controller('TouristicDCtrl', function($scope, $stateParams, $http, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate) {
   this.id = $stateParams.touristicId;
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-know-detail/?args[0]='+ this.id,
+  $http.get('http://caqueta.travel/endpoint/services-know-detail/?args[0]='+ this.id,
     {cache:true}).then(function(response){
       $scope.gallery = response.data[0].gallery;
       $scope.detail = response.data[0];
     });
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
     $scope.detail.comments = {};
     $scope.detail.comments = response.data;
   });
@@ -409,7 +409,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
 .controller('EventsCtrl', function($scope, $http){
 
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-events',
+  $http.get('http://caqueta.travel/endpoint/services-events',
     {cache:true}).then(function(response){
       $scope.events = {};
       $scope.events = response.data;
@@ -419,13 +419,13 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
 .controller('EventCtrl', function($scope, $stateParams, $http, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
   this.id = $stateParams.eventId;
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-events-detail/?args[0]='
+  $http.get('http://caqueta.travel/endpoint/services-events-detail/?args[0]='
     + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data[0];
     });
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
       $scope.detail.comments = {};
       console.log(response.data[0]);
       $scope.detail.comments = response.data;
@@ -460,7 +460,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 })
 
 .controller('MultimediaCtrl', function($scope, $http){
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-multimedia',
+  $http.get('http://caqueta.travel/endpoint/services-multimedia',
     {cache:true}).then(function(response){
       $scope.multimedias = {};
       $scope.multimedias = response.data;
@@ -469,7 +469,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
 .controller('ImageCtrl', function($scope, $stateParams, $http, $ionicModal, $ionicBackdrop, $ionicSlideBoxDelegate, $ionicScrollDelegate){
   this.id = $stateParams.nid;
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-multimedia-detail/?args[0]=' +  this.id,
+  $http.get('http://caqueta.travel/endpoint/services-multimedia-detail/?args[0]=' +  this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       console.log(response.data[0]);
@@ -505,12 +505,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 })
 
 .controller('DirectoryCtrl', function($scope, $http, $ionicModal){
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-directory',
+  $http.get('http://caqueta.travel/endpoint/services-directory',
     {cache:true}).then(function(response){
       $scope.list = {};
       $scope.list = response.data;
     });
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
       $scope.detail.comments = {};
       console.log(response.data[0]);
       $scope.detail.comments = response.data;
@@ -545,12 +545,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 })
 
 .controller('SearchCtrl', function($scope, $http){
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-experience',
+  $http.get('http://caqueta.travel/endpoint/services-experience',
     {cache:true}).then(function(response){
       $scope.busquedas = {};
       $scope.busquedas = response.data;
   });
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
       $scope.detail.comments = {};
       console.log(response.data[0]);
       $scope.detail.comments = response.data;
@@ -561,7 +561,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
   this.id = $stateParams.nid;
   console.log(this.id);
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/node/' + this.id,
+  $http.get('http://caqueta.travel/endpoint/node/' + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data;
@@ -597,12 +597,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
 .controller('DirectoryDCtrl', function($scope, $stateParams, $http, $ionicModal){
   this.id = $stateParams.nid;
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-directory-detail/?args[0]=' + this.id,
+  $http.get('http://caqueta.travel/endpoint/services-directory-detail/?args[0]=' + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data[0];
     });
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
       $scope.detail.comments = {};
       console.log(response.data[0]);
       $scope.detail.comments = response.data;
@@ -637,7 +637,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 })
 
 .controller('AccountCtrl', function($scope, $stateParams, $http) {
-  $http.get('http://localhost:1337/caqueta.travel/endpoint/comment.json',
+  $http.get('http://caqueta.travel/endpoint/comment.json',
     {cache:true}).then(function(response){
 
       if($scope.accessToken != undefined){
