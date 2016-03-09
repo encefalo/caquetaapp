@@ -1,7 +1,7 @@
-angular.module('starter.controllers', ['ionic', 'ngCordova'])
+angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, $state,
-  $ionicPopup, $rootScope, $ionicLoading, $cordovaSocialSharing){
+  $ionicPopup, $rootScope, $ionicLoading, $cordovaSocialSharing, $cordovaOauth){
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -15,7 +15,9 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   $scope.registerData = {};
   $scope.contact = {};
   $scope.message = {};
+  $scope.detail = {};
   $scope.favorite = [];
+  $scope.zoomMin = 1;
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -45,71 +47,21 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   });
 
   //Social Share
-  $cordovaSocialSharing
-    .share(message, subject, file, link) // Share via native share sheet
-    .then(function(result) {
-      // Success!
-    }, function(err) {
-      // An error occured. Show a message to the user
-    });
+  $scope.shareAnywhere = function(subject, message, img) {
+    $cordovaSocialSharing.share(message, subject, img, "http://santoshshinde2012.blogspot.com");
+  };
 
-  $cordovaSocialSharing
-    .shareViaTwitter(message, image, link)
-    .then(function(result) {
-      // Success!
-    }, function(err) {
-      // An error occurred. Show a message to the user
-    });
-
-  $cordovaSocialSharing
-    .shareViaWhatsApp(message, image, link)
-    .then(function(result) {
-      // Success!
-    }, function(err) {
-      // An error occurred. Show a message to the user
-    });
-
-  $cordovaSocialSharing
-    .shareViaFacebook(message, image, link)
-    .then(function(result) {
-      // Success!
-    }, function(err) {
-      // An error occurred. Show a message to the user
-    });
-
-  // access multiple numbers in a string like: '0612345678,0687654321'
-  $cordovaSocialSharing
-    .shareViaSMS(message, number)
-    .then(function(result) {
-      // Success!
-    }, function(err) {
-      // An error occurred. Show a message to the user
-    });
-
-// toArr, ccArr and bccArr must be an array, file can be either null, string or array
-  $cordovaSocialSharing
-    .shareViaEmail(message, subject, toArr, ccArr, bccArr, file)
-    .then(function(result) {
-      // Success!
-    }, function(err) {
-      // An error occurred. Show a message to the user
-    });
-
-  $cordovaSocialSharing
-    .canShareVia(socialType, message, image, link)
-    .then(function(result) {
-      // Success!
-    }, function(err) {
-      // An error occurred. Show a message to the user
-    });
-
-  $cordovaSocialSharing
-    .canShareViaEmail()
-    .then(function(result) {
-      // Yes we can
-    }, function(err) {
-      // Nope
-    });
+  $scope.shareViaWhatsApp = function(message, image, link) {
+   $cordovaSocialSharing
+     .shareViaWhatsApp(message, image, link)
+     .then(function(result) {
+      alert(result);
+       // Success!
+     }, function(err) {
+       // An error occurred. Show a message to the user
+        alert("Cannot share on WhatsApp");
+     });
+  };
 
 
   // Triggered in the message modal to close it
@@ -155,7 +107,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     });
     var req = {
                 method: 'post',
-                url: 'http://caqueta.travel/endpoint/user/login.json',
+                url: 'http://localhost:1337/caqueta.travel/endpoint/user/login.json',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -203,7 +155,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     if($scope.registerData.pass == $scope.registerData.confirmPass){
       var req = {
                 method: 'post',
-                url: 'http://caqueta.travel/endpoint/user',
+                url: 'http://localhost:1337/caqueta.travel/endpoint/user',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -232,139 +184,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     }, 1000);
   };
 
-  // This method is executed when the user press the "Sign in with Google" button
-  $scope.googleSignIn = function() {
-    $ionicLoading.show({
-      template: 'Logging in...'
-    });
-
-    window.plugins.googleplus.login(
-      {},
-      function (user_data) {
-        // For the purpose of this example I will store user data on local storage
-        UserService.setUser({
-          userID: user_data.userId,
-          name: user_data.displayName,
-          email: user_data.email,
-          picture: user_data.imageUrl,
-          accessToken: user_data.accessToken,
-          idToken: user_data.idToken
-        });
-
-        $ionicLoading.hide();
-        $state.go('app.home');
-      },
-      function (msg) {
-        $ionicLoading.hide();
-      }
-    );
-  };
-  // This is the success callback from the login method
-  var fbLoginSuccess = function(response) {
-    if (!response.authResponse){
-      fbLoginError("Cannot find the authResponse");
-      return;
-    }
-
-    var authResponse = response.authResponse;
-
-    getFacebookProfileInfo(authResponse)
-    .then(function(profileInfo) {
-      // For the purpose of this example I will store user data on local storage
-      UserService.setUser({
-        authResponse: authResponse,
-        userID: profileInfo.id,
-        name: profileInfo.name,
-        email: profileInfo.email,
-        picture : "http://graph.facebook.com/" + authResponse.userID + "/picture?type=large"
-      });
-      $ionicLoading.hide();
-      $state.go('app.home');
-    }, function(fail){
-      // Fail get profile info
-      console.log('profile info fail', fail);
-    });
-  };
-
-  // This is the fail callback from the login method
-  var fbLoginError = function(error){
-    console.log('fbLoginError', error);
-    $ionicLoading.hide();
-  };
-
-  // This method is to get the user profile info from the facebook api
-  var getFacebookProfileInfo = function (authResponse) {
-    var info = $q.defer();
-
-    facebookConnectPlugin.api('/me?fields=email,name&access_token=' + authResponse.accessToken, null,
-      function (response) {
-        console.log(response);
-        info.resolve(response);
-      },
-      function (response) {
-        console.log(response);
-        info.reject(response);
-      }
-    );
-    return info.promise;
-  };
-
-  //This method is executed when the user press the "Login with facebook" button
-  $scope.facebookSignIn = function() {
-    facebookConnectPlugin.getLoginStatus(function(success){
-      if(success.status === 'connected'){
-        // The user is logged in and has authenticated your app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed request, and the time the access token
-        // and signed request each expire
-        console.log('getLoginStatus', success.status);
-
-        // Check if we have our user saved
-        var user = UserService.getUser('facebook');
-
-        if(!user.userID){
-          getFacebookProfileInfo(success.authResponse)
-          .then(function(profileInfo) {
-            // For the purpose of this example I will store user data on local storage
-            UserService.setUser({
-              authResponse: success.authResponse,
-              userID: profileInfo.id,
-              name: profileInfo.name,
-              email: profileInfo.email,
-              picture : "http://graph.facebook.com/" + success.authResponse.userID + "/picture?type=large"
-            });
-
-            $state.go('app.home');
-          }, function(fail){
-            // Fail get profile info
-            console.log('profile info fail', fail);
-          });
-        }else{
-          $state.go('app.home');
-        }
-      } else {
-        // If (success.status === 'not_authorized') the user is logged in to Facebook,
-        // but has not authenticated your app
-        // Else the person is not logged into Facebook,
-        // so we're not sure if they are logged into this app or not.
-
-        console.log('getLoginStatus', success.status);
-
-        $ionicLoading.show({
-          template: 'Logging in...'
-        });
-
-        // Ask the permissions you need. You can learn more about
-        // FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.4
-        facebookConnectPlugin.login(['email', 'public_profile'], fbLoginSuccess, fbLoginError);
-      }
-    });
-  };
-
   // Perform the login action when the user submits the login form
   $scope.doMessage = function(){
     var req = {
                 method: 'post',
-                url: 'http://caqueta.travel/endpoint/submission',
+                url: 'http://localhost:1337/caqueta.travel/endpoint/submission',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -408,7 +232,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     if ($scope.accessToken != undefined){
       var req = {
                 method: 'post',
-                url: 'http://caqueta.travel/endpoint/comment.json',
+                url: 'http://localhost:1337/caqueta.travel/endpoint/comment.json',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -458,10 +282,27 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   $scope.openLink = function(url){
     window.open(url, '_blank');
   };
+
+  $scope.googleLogin = function() {
+    $cordovaOauth.google("657841967825-8q4ba5ko4vpthdn6oavlpncejof954h5.apps.googleusercontent.com", ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email"]).then(function(result) {
+        console.log(JSON.stringify(result));
+    }, function(error) {
+        console.log(error);
+    });
+  };
+
+  $scope.facebookLogin = function() {
+    $cordovaOauth.facebook("756712241131121", ["email"]).then(function(result) {
+        console.log(JSON.stringify(result));
+    }, function(error) {
+        console.log(error);
+    });
+  };
+
 })
 
 .controller('HomeCtrl', function($scope, $http){
-  $http.get('http://caqueta.travel/endpoint/services-pauta',
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-pauta',
     {cache:true}).then(function(response){
       $scope.pauta = {};
       $scope.pauta = response.data[0];
@@ -469,36 +310,32 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('PlaylistsCtrl', function($scope, $http, $cordovaGeolocation) {
-  $http.get('http://caqueta.travel/endpoint/services-experience',
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-experience',
     {cache:true}).then(function(response){
       $scope.playlists = {};
       $scope.playlists = response.data;
     });
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams, $http, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate) {
+.controller('PlaylistCtrl', function($scope, $stateParams, $http, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
   this.id = $stateParams.playlistId;
-  $scope.zoomMin = 1;
-  $http.get('http://caqueta.travel/endpoint/services-experience-detail/?args[0]=' + this.id,
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-experience-detail/?args[0]=' + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data[0];
     });
 
-  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
-      $scope.detail.comments = {};
-      console.log(response.data[0]);
-      $scope.detail.comments = response.data;
-    });
-
-  $scope.zoomMin = 1;
-  $scope.showImages = function(index) {
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+    $scope.detail.comments = {};
+    $scope.detail.comments = response.data[0];
+  });
+  $scope.showImages = function(index){
     $scope.activeSlide = index;
     $scope.showModal('templates/gallery-zoomview.html');
   };
 
   $scope.showModal = function(templateUrl) {
-    $ionicModal.fromTemplateUrl(templateUrl, {
+    $ionicModal.fromTemplateUrl(templateUrl,{
       scope: $scope
     }).then(function(modal){
       $scope.modal = modal;
@@ -522,76 +359,38 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('TouristicCtrl', function($scope, $http){
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
-  $scope.pageTitle = '<img src="../img/cabecera.png" with="150px" height="43px">';
-  $http.get('http://caqueta.travel/endpoint/services-know',
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-know',
     {cache:true}).then(function(response){
       $scope.touristics = {};
-      console.log(response.data);
       $scope.touristics = response.data;
     });
 })
 
-.controller('TouristicDCtrl', function($scope, $stateParams, $http) {
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
-
+.controller('TouristicDCtrl', function($scope, $stateParams, $http, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate) {
   this.id = $stateParams.touristicId;
-  $http.get('http://caqueta.travel/endpoint/services-know-detail/?args[0]='
-    + this.id,
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-know-detail/?args[0]='+ this.id,
     {cache:true}).then(function(response){
-      $scope.detail = {};
+      $scope.gallery = response.data[0].gallery;
       $scope.detail = response.data[0];
     });
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+    $scope.detail.comments = {};
+    $scope.detail.comments = response.data;
+  });
 
-  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
-      $scope.detail.comments = {};
-      console.log(response.data[0]);
-      $scope.detail.comments = response.data;
-    });
-
-  $scope.zoomMin = 1;
-  $scope.showImages = function(index) {
+  $scope.showImages = function(index){
     $scope.activeSlide = index;
     $scope.showModal('templates/gallery-zoomview.html');
   };
 
-
   $scope.showModal = function(templateUrl) {
-    $ionicModal.fromTemplateUrl(templateUrl, {
+    $ionicModal.fromTemplateUrl(templateUrl,{
       scope: $scope
     }).then(function(modal){
       $scope.modal = modal;
       $scope.modal.show();
     });
-  }
+  };
 
   $scope.closeModal = function(){
     $scope.modal.hide();
@@ -609,22 +408,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 })
 
 .controller('EventsCtrl', function($scope, $http){
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    rating:  0,
-    minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
 
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
-  $http.get('http://caqueta.travel/endpoint/services-events',
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-events',
     {cache:true}).then(function(response){
       $scope.events = {};
       $scope.events = response.data;
@@ -632,37 +417,50 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     });
 })
 
-.controller('EventCtrl', function($scope, $stateParams, $http){
-  $scope.ratingsObject = {
-    iconOn : 'ion-ios-star',
-    iconOff : 'ion-ios-star-outline',
-    iconOnColor: 'rgb(200, 200, 100)',
-    iconOffColor:  'rgb(200, 100, 100)',
-    //rating:  0,
-    //minRating:0,
-    callback: function(rating) {
-      $scope.ratingsCallback(rating);
-    }
-  };
-  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
-      $scope.detail.comments = {};
-      console.log(response.data[0]);
-      $scope.detail.comments = response.data;
-    });
-  $scope.ratingsCallback = function(rating) {
-    console.log('Selected rating is : ', rating);
-  };
+.controller('EventCtrl', function($scope, $stateParams, $http, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
   this.id = $stateParams.eventId;
-  $http.get('http://caqueta.travel/endpoint/services-events-detail/?args[0]='
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-events-detail/?args[0]='
     + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data[0];
     });
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
+    });
+  $scope.showImages = function(index){
+    $scope.activeSlide = index;
+    $scope.showModal('templates/gallery-zoomview.html');
+  };
+
+  $scope.showModal = function(templateUrl) {
+    $ionicModal.fromTemplateUrl(templateUrl,{
+      scope: $scope
+    }).then(function(modal){
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.closeModal = function(){
+    $scope.modal.hide();
+    $scope.modal.remove();
+  };
+
+  $scope.updateSlideStatus = function(slide){
+    var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+    if (zoomFactor == $scope.zoomMin) {
+      $ionicSlideBoxDelegate.enableSlide(true);
+    } else {
+      $ionicSlideBoxDelegate.enableSlide(false);
+    }
+  };
 })
 
 .controller('MultimediaCtrl', function($scope, $http){
-  $http.get('http://caqueta.travel/endpoint/services-multimedia',
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-multimedia',
     {cache:true}).then(function(response){
       $scope.multimedias = {};
       $scope.multimedias = response.data;
@@ -671,25 +469,25 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
 .controller('ImageCtrl', function($scope, $stateParams, $http, $ionicModal, $ionicBackdrop, $ionicSlideBoxDelegate, $ionicScrollDelegate){
   this.id = $stateParams.nid;
-  $http.get('http://caqueta.travel/endpoint/services-multimedia-detail/?args[0]=' +  this.id,
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-multimedia-detail/?args[0]=' +  this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
+      console.log(response.data[0]);
       $scope.detail = response.data[0];
     });
-  $scope.zoomMin = 1;
-  $scope.showImages = function(index) {
+  $scope.showImages = function(index){
     $scope.activeSlide = index;
     $scope.showModal('templates/gallery-zoomview.html');
   };
 
   $scope.showModal = function(templateUrl) {
-    $ionicModal.fromTemplateUrl(templateUrl, {
+    $ionicModal.fromTemplateUrl(templateUrl,{
       scope: $scope
     }).then(function(modal){
       $scope.modal = modal;
       $scope.modal.show();
     });
-  }
+  };
 
   $scope.closeModal = function(){
     $scope.modal.hide();
@@ -706,92 +504,75 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
   };
 })
 
-.controller('DirectoryCtrl', function($scope, $http){
-  $http.get('http://caqueta.travel/endpoint/services-directory',
+.controller('DirectoryCtrl', function($scope, $http, $ionicModal){
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-directory',
     {cache:true}).then(function(response){
       $scope.list = {};
       $scope.list = response.data;
     });
-  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
       $scope.detail.comments = {};
       console.log(response.data[0]);
       $scope.detail.comments = response.data;
     });
+  $scope.showImages = function(index){
+    $scope.activeSlide = index;
+    $scope.showModal('templates/gallery-zoomview.html');
+  };
+
+  $scope.showModal = function(templateUrl) {
+    $ionicModal.fromTemplateUrl(templateUrl,{
+      scope: $scope
+    }).then(function(modal){
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.closeModal = function(){
+    $scope.modal.hide();
+    $scope.modal.remove();
+  };
+
+  $scope.updateSlideStatus = function(slide){
+    var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+    if (zoomFactor == $scope.zoomMin) {
+      $ionicSlideBoxDelegate.enableSlide(true);
+    } else {
+      $ionicSlideBoxDelegate.enableSlide(false);
+    }
+  };
 })
 
 .controller('SearchCtrl', function($scope, $http){
-  $http.get('http://caqueta.travel/endpoint/services-experience',
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-experience',
     {cache:true}).then(function(response){
       $scope.busquedas = {};
       $scope.busquedas = response.data;
   });
-  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
       $scope.detail.comments = {};
       console.log(response.data[0]);
       $scope.detail.comments = response.data;
     });
-  $scope.zoomMin = 1;
-  $scope.showImages = function(index) {
-    $scope.activeSlide = index;
-    $scope.showModal('templates/gallery-zoomview.html');
-  };
-
-  $scope.showModal = function(templateUrl) {
-    $ionicModal.fromTemplateUrl(templateUrl, {
-      scope: $scope
-    }).then(function(modal){
-      $scope.modal = modal;
-      $scope.modal.show();
-    });
-  }
-
-  $scope.closeModal = function(){
-    $scope.modal.hide();
-    $scope.modal.remove();
-  };
-
-  $scope.updateSlideStatus = function(slide){
-    var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
-    if (zoomFactor == $scope.zoomMin) {
-      $ionicSlideBoxDelegate.enableSlide(true);
-    } else {
-      $ionicSlideBoxDelegate.enableSlide(false);
-    }
-  };
 })
 
-.controller('SearchDCtrl', function($scope, $stateParams, $http){
+.controller('SearchDCtrl', function($scope, $stateParams, $http, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate){
 
   this.id = $stateParams.nid;
   console.log(this.id);
-  $http.get('http://caqueta.travel/endpoint/node/' + this.id,
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/node/' + this.id,
     {cache:true}).then(function(response){
       $scope.detail = {};
       $scope.detail = response.data;
     });
-
-})
-
-.controller('DirectoryDCtrl', function($scope, $stateParams, $http){
-  this.id = $stateParams.nid;
-  $http.get('http://caqueta.travel/endpoint/services-directory-detail/?args[0]=' + this.id,
-    {cache:true}).then(function(response){
-      $scope.detail = {};
-      $scope.detail = response.data[0];
-    });
-  $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
-      $scope.detail.comments = {};
-      console.log(response.data[0]);
-      $scope.detail.comments = response.data;
-    });
-  $scope.zoomMin = 1;
-  $scope.showImages = function(index) {
+  $scope.showImages = function(index){
     $scope.activeSlide = index;
     $scope.showModal('templates/gallery-zoomview.html');
   };
 
   $scope.showModal = function(templateUrl) {
-    $ionicModal.fromTemplateUrl(templateUrl, {
+    $ionicModal.fromTemplateUrl(templateUrl,{
       scope: $scope
     }).then(function(modal){
       $scope.modal = modal;
@@ -812,11 +593,51 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
       $ionicSlideBoxDelegate.enableSlide(false);
     }
   };
+})
 
+.controller('DirectoryDCtrl', function($scope, $stateParams, $http, $ionicModal){
+  this.id = $stateParams.nid;
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/services-directory-detail/?args[0]=' + this.id,
+    {cache:true}).then(function(response){
+      $scope.detail = {};
+      $scope.detail = response.data[0];
+    });
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
+      $scope.detail.comments = {};
+      console.log(response.data[0]);
+      $scope.detail.comments = response.data;
+    });
+  $scope.showImages = function(index){
+    $scope.activeSlide = index;
+    $scope.showModal('templates/gallery-zoomview.html');
+  };
+
+  $scope.showModal = function(templateUrl) {
+    $ionicModal.fromTemplateUrl(templateUrl,{
+      scope: $scope
+    }).then(function(modal){
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.closeModal = function(){
+    $scope.modal.hide();
+    $scope.modal.remove();
+  };
+
+  $scope.updateSlideStatus = function(slide){
+    var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+    if (zoomFactor == $scope.zoomMin) {
+      $ionicSlideBoxDelegate.enableSlide(true);
+    } else {
+      $ionicSlideBoxDelegate.enableSlide(false);
+    }
+  };
 })
 
 .controller('AccountCtrl', function($scope, $stateParams, $http) {
-  $http.get('http://caqueta.travel/endpoint/comment.json',
+  $http.get('http://localhost:1337/caqueta.travel/endpoint/comment.json',
     {cache:true}).then(function(response){
 
       if($scope.accessToken != undefined){

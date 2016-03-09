@@ -1,4 +1,4 @@
-<div class="modal image-modal transparent" on-swipe-down="closeModal()">
+<div class="modal image-modal transparent" on-swipe-down="closeModal()" on-swipe-up="closeModal()">
   <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide">
     <ion-slide ng-repeat="image in detail.gallery">
       <ion-scroll direction="xy" scrollbar-x="false" scrollbar-y="false"
