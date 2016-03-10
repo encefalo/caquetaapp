@@ -184,36 +184,8 @@
     <key>NSLocationWhenInUseUsageDescription</key>
     <string/>
     <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLName</key>
-        <string>com.ionicframework.starter</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.ionicframework.starter</string>
-        </array>
-      </dict>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLName</key>
-        <string>REVERSED_CLIENT_ID</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>657841967825-8q4ba5ko4vpthdn6oavlpncejof954h5.apps.googleusercontent.com</string>
-        </array>
-      </dict>
-    </array>
+    <array/>
     <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>com.ionicframework.starter</string>
-      <string>657841967825-8q4ba5ko4vpthdn6oavlpncejof954h5.apps.googleusercontent.com</string>
-      <string>com-google-gidconsent</string>
-      <string>com-google-gidconsent-google</string>
-      <string>com.google.gppconsent.2.4.0</string>
-      <string>com.google.gppconsent.2.4.1</string>
-    </array>
+    <array/>
   </dict>
 </plist>

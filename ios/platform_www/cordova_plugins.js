@@ -48,14 +48,6 @@ module.exports = [
         "clobbers": [
             "navigator.geolocation"
         ]
-    },
-    {
-        "file": "plugins/cordova-plugin-googleplus/www/GooglePlus.js",
-        "id": "cordova-plugin-googleplus.GooglePlus",
-        "pluginId": "cordova-plugin-googleplus",
-        "clobbers": [
-            "window.plugins.googleplus"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -63,8 +55,7 @@ module.exports.metadata =
 {
     "cordova-plugin-x-socialsharing": "5.0.9",
     "cordova-plugin-inappbrowser": "1.1.1",
-    "cordova-plugin-geolocation": "2.1.0",
-    "cordova-plugin-googleplus": "4.0.8"
+    "cordova-plugin-geolocation": "2.1.0"
 }
 // BOTTOM OF METADATA
 });
