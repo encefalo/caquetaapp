@@ -3,7 +3,7 @@
     <ion-list>
       <ion-item class="item-thumbnail-left item">
         <img ng-src="http://caqueta.travel/geosdigital/sites/default/files/{{ detail.field_imagen.und[0].filename }}" class="fullscreen-image"/>
-        <h2>{{ detail.title }}</h2>
+        <h2 ng-bind-html="detail.title" class="title-detail"></h2>
         <h3>{{ detail.field_mapa.und[0].address }}</h3>
         <div>
           <button ng-click="message()" class="ion-email"></button>

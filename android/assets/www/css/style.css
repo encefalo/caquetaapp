@@ -88,7 +88,7 @@ img.avatar.motion.spin.fade{
 
 .menu .bar.bar-header {
   /*background-image: url('../img/menu.jpg') !important;*/
-  background: #0271b7;
+  background: #000;
   background-size: 120%;
   background-position: 0%;
   transition: all .5s ease-in-out;
@@ -241,9 +241,13 @@ p.front-menu {
 }
 
 body.platform-ready h2.ng-binding, body.platform-ready h3.ng-binding,
-.list .item-content h3, .item.item-input.item-select .input-label{
+.list .item-content h3, .item.item-input.item-select .input-label, .title-detail{
   text-overflow: initial !important;
   white-space: normal !important;
+}
+.descrition-detail{
+  text-align: justify;
+  padding: 20px;
 }
 
 .item.item-input.item-select{

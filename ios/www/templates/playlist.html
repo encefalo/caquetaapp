@@ -5,7 +5,7 @@
   <ion-content class="has-subheader has-tabs">
     <ion-item class="item-thumbnail-left item card-item">
       <img ng-src="{{ detail.pic }}" class="fullscreen-image"/>
-      <h2 ng-bind-html="detail.title"></h2>
+      <h2 ng-bind-html="detail.title" class="title-detail"></h2>
       <h3>{{ detail.address }}</h3>
       <span>{{ detail.mapa['address'] }}</span>
       <div>
@@ -16,7 +16,7 @@
         <rating ng-model="rate" max="max"></rating>
       </div>
     </ion-item>
-    <p class="padding" ng-bind-html="detail.description"></p>
+    <p class="padding descrition-detail" ng-bind-html="detail.description"></p>
     <ion-item ng-repat="comment in detail.comments">
       <h2 class="center">Comentarios</h2>
       <h3 ng-bind-html="comment.title"></h2>
