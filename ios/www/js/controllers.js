@@ -18,6 +18,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
   $scope.detail = {};
   $scope.favorite = [];
   $scope.zoomMin = 1;
+  // Declared header in pages
+  $scope.navTitle = '<img src="img/cabecera.png" class="avatar motion spin fade center">';
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -48,18 +50,24 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
   //Social Share
   $scope.shareAnywhere = function(subject, message, img) {
-    $cordovaSocialSharing.share(message, subject, img, "http://santoshshinde2012.blogspot.com");
+    $cordovaSocialSharing.share(message, subject, img, "http://caqueta.travel");
   };
 
   $scope.shareViaWhatsApp = function(message, image, link) {
    $cordovaSocialSharing
      .shareViaWhatsApp(message, image, link)
      .then(function(result) {
-      alert(result);
+      var alertPopup = $ionicPopup.alert({
+        title: 'Comparitdo por WhatsApp',
+        template: 'Por favor revisa tus datos'
+      });
        // Success!
      }, function(err) {
        // An error occurred. Show a message to the user
-        alert("Cannot share on WhatsApp");
+        var alertPopup = $ionicPopup.alert({
+          title: 'Compartir por WhatsApp',
+          template: 'Ocurrio un error al compartir'
+        });
      });
   };
 
@@ -76,8 +84,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
   $scope.closeRegister = function() {
     $scope.modalRegister.hide();
   };
-  // Declared header in pages
-  $scope.navTitle = '<img src="img/cabecera.png" class="avatar motion spin fade center">';
 
   $scope.accessToken = $rootScope.accessToken;
   // Open the login modal
@@ -123,22 +129,19 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
           title: 'Inicio de sesión éxitoso',
           template: 'Bienvenido ' + $scope.loginData.username
         });
-      $state.go('app.favorites');
-      $scope.closeLogin();
-
+      // Simulate a login delay. Remove this and replace with your login
+      // code if using a login system
+      $timeout(function() {
+        $ionicLoading.hide();
+        $scope.closeLogin();
+      }, 10000);
+      $window.location.reload(true);
     }).error(function(data, status) {
-      console.log("ERROR: " + data);
       var alertPopup = $ionicPopup.alert({
         title: 'Inicio de sesión fallido',
         template: 'Por favor revisa tus datos'
       });
     });
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $ionicLoading.hide();
-      $scope.closeLogin();
-    }, 1000);
   };
 
   //Perform the register user
@@ -248,8 +251,9 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
       $http(req).success(function(data) {
         var alertPopup = $ionicPopup.alert({
           title: 'Comentario enviado',
-          template: 'Comentario enviado exitosamente'
+          template: 'Comentario enviado exitosamente, en espera de aprobación'
         });
+        $window.location.reload(true);
       })
       .error(function(data, status) {
         var alertPopup = $ionicPopup.alert({
@@ -278,13 +282,19 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
       $scope.modal.show();
     }
   };
-
+  /**
+   * Link
+   */
   $scope.openLink = function(url){
-    window.open(url, '_blank');
+    var ref = cordova.InAppBrowser.open(url, '_blank', 'location=yes');
+    //ref.close();
   };
 
   $scope.googleLogin = function() {
-    $cordovaOauth.google("657841967825-8q4ba5ko4vpthdn6oavlpncejof954h5.apps.googleusercontent.com", ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email"]).then(function(result) {
+    $cordovaOauth.google("657841967825-8q4ba5ko4vpthdn6oavlpncejof954h5.apps.googleusercontent.com",
+      ["https://www.googleapis.com/auth/urlshortener",
+      "https://www.googleapis.com/auth/userinfo.email"])
+    .then(function(result) {
         console.log(JSON.stringify(result));
     }, function(error) {
         console.log(error);
@@ -327,7 +337,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
 
   $http.get('http://caqueta.travel/endpoint/comments-services/?args[0]=' + this.id,{cache:true}).then(function(response){
     $scope.detail.comments = {};
-    $scope.detail.comments = response.data[0];
+    console.log(response.data);
+    $scope.detail.comments = response.data;
   });
   $scope.showImages = function(index){
     $scope.activeSlide = index;
@@ -566,9 +577,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
       $scope.detail = {};
       $scope.detail = response.data;
     });
+
   $scope.showImages = function(index){
     $scope.activeSlide = index;
-    $scope.showModal('templates/gallery-zoomview.html');
+    $scope.showModal('templates/gallery-zoomview-search.html');
   };
 
   $scope.showModal = function(templateUrl) {

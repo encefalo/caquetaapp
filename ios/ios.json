@@ -19,6 +19,10 @@
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Battery\"><param name=\"ios-package\" value=\"CDVBattery\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -46,6 +50,9 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "com.encefalo.starter.caqueta"
         }
     },
     "dependent_plugins": {},
@@ -98,11 +105,20 @@
             "clobbers": [
                 "navigator.geolocation"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-battery-status/www/battery.js",
+            "id": "cordova-plugin-battery-status.battery",
+            "pluginId": "cordova-plugin-battery-status",
+            "clobbers": [
+                "navigator.battery"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-x-socialsharing": "5.0.9",
         "cordova-plugin-inappbrowser": "1.1.1",
-        "cordova-plugin-geolocation": "2.1.0"
+        "cordova-plugin-geolocation": "2.1.0",
+        "cordova-plugin-battery-status": "1.1.1"
     }
 }

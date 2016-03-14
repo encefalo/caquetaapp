@@ -1,6 +1,6 @@
 <ion-view view-title="{{ navTitle }}">
   <ion-header-bar class="bar bar-subheader custom-subheader">
-    <i class="icon ion-document-text placeholder-icon"></i><h1 class="center title">{{ detail.title }}</h1>
+    <i class="icon ion-document-text placeholder-icon"></i><h1 class="center title">Directorio empresarial</h1>
   </ion-header-bar>
   <ion-content class="has-subheader has-tabs">
     <ion-item class="item-thumbnail-left item card-item">
@@ -17,7 +17,7 @@
       <rating ng-model="rate" max="max"></rating>
     </ion-item>
     <p class="padding descrition-detail" ng-bind-html="detail.description"></p>
-    <ion-item ng-repat="comment in detail.comments">
+    <ion-item ng-repeat="comment in detail.comments">
       <h2 class="center">Comentarios</h2>
       <h3 ng-bind-html="comment.title"></h2>
       <p ng-bind-html="comment.comment"></p>

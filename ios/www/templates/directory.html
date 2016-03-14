@@ -25,13 +25,12 @@
       </label>
     </div>
     <ion-list>
-      <ion-item ng-repeat="directory in list | filter:search" href="#/app/directories/{{ directory.nid }}" class="item-avatar-left item">
+      <ion-item ng-repeat="directory in list | filter:search" href="#/app/directories/{{ directory.nid }}" class="item-thumbnail-left item card-item">
         <img ng-src="{{ directory.pic }}" class="fullscreen-image"/>
-        <h2>{{ directory.title }}</h2>
-        <h3>{{ directory.address }}</h3>
-        <span>{{ directory.city }}</span>
-        <h4> {{ details.company[0] }} </h4>
-        <p> {{ directory.description }} </p>
+        <h2 ng-bind-html="directory.title"></h2>
+        <h3 ng-if="directory.address.length > 0">{{ directory.address }}</h3>
+        <p class="description"> {{ directory.description }} </p>
+        <rating ng-model="rate" max="max"></rating>
         <p class="comments subdued">{{ directory.comments }} comentarios</p>
       </ion-item>
     </ion-list>

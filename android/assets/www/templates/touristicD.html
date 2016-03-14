@@ -17,9 +17,10 @@
       <rating ng-model="rate" max="max"></rating>
     </ion-item>
     <p class="padding descrition-detail" ng-bind-html="detail.description"></p>
-    <ion-item ng-repat="comment in detail.comments">
-      <h2 class="center">Comentarios</h2>
-      <h3 ng-bind-html="comment.title"></h2>
+
+    <h3 class="center item item-divider">Comentarios</h3>
+    <ion-item ng-repeat="comment in detail.comments">
+      <h4 ng-bind-html="comment.title"></h4>
       <p ng-bind-html="comment.comment"></p>
     </ion-item>
     <a class="item item-list-detail">

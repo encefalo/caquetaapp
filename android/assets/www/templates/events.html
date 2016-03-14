@@ -10,6 +10,9 @@
       </label>
     </div>
     <div class="list list-inset">
+      <div class="item item-divider">
+        <h2 class="center">Mes</h2>
+      </div>
       <label class="item item-input item-select">
         <select ng-model="search">
           <option value="" selected="true">Todos</option>
@@ -31,7 +34,7 @@
     <ion-list>
       <ion-item ng-repeat="event in events | filter:search" href="#/app/events/{{ event.nid }}" class="item-thumbnail-left item card-item">
         <img ng-src="{{ event.pic }}"/>
-        <h2>{{ event.title }}</h2>
+        <h2 ng-bind-html="event.title"></h2>
         <h3 ng-if="event.address.length > 0">{{ event.address }}</h3>
         <h3> {{ event.company[0] }} </h3>
         <p class="description"> {{ event.description }} </p>

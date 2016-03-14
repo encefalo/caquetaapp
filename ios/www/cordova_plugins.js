@@ -48,6 +48,14 @@ module.exports = [
         "clobbers": [
             "navigator.geolocation"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-battery-status/www/battery.js",
+        "id": "cordova-plugin-battery-status.battery",
+        "pluginId": "cordova-plugin-battery-status",
+        "clobbers": [
+            "navigator.battery"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -55,7 +63,8 @@ module.exports.metadata =
 {
     "cordova-plugin-x-socialsharing": "5.0.9",
     "cordova-plugin-inappbrowser": "1.1.1",
-    "cordova-plugin-geolocation": "2.1.0"
+    "cordova-plugin-geolocation": "2.1.0",
+    "cordova-plugin-battery-status": "1.1.1"
 }
 // BOTTOM OF METADATA
 });

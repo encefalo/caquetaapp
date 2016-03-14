@@ -4,10 +4,10 @@
   </ion-header-bar>
   <ion-content class="has-tabs has-subheader">
     <div class="list list-inset">
+      <div class="item item-divider">
+        <h2 class="center">Municipios</h2>
+      </div>
       <label class="item item-input item-select">
-        <div class="input-label">
-          Municipios
-        </div>
         <select ng-model="search">
           <option value="" selected="true">Todos</option>
           <option>Albania</option>
@@ -32,14 +32,14 @@
     </div>
     <ion-list class="list-card">
       <ion-item ng-repeat="multimedia in multimedias | filter:search">
-        <a href="#/app/multimedia/{{ multimedia.nid }}">
+        <a href="#/app/search/{{ multimedia.nid }}">
           <div class="item item-image">
           <img ng-src="{{ multimedia.pic }}"/>
         </div>
         <div ng-repeat="municipalities in multimedia.municipalities">
           {{ municipalities }}
         </div>
-        <div class="title"><i class="ion-images"></i>{{ multimedia.title }}</div>
+        <div class="title"><i class="ion-images"></i><h2 ng-bind-html="multimedia.title" class="title-detail"></h2></div>
         </a>
       </ion-item>
     </ion-list>
