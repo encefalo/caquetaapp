@@ -18,6 +18,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
   $scope.detail = {};
   $scope.favorite = [];
   $scope.zoomMin = 1;
+  $scope.accessToken = $rootScope.accessToken;
+  console.log($scope.accessToken);
   // Declared header in pages
   $scope.navTitle = '<img src="img/cabecera.png" class="avatar motion spin fade center">';
 
@@ -45,7 +47,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
   $scope.max = 5;
 
   $scope.$watch('data.rating', function() {
-    console.log('New value: '+$scope.data.rating);
+    console.log('New value: '+ $scope.data.rating);
   });
 
   //Social Share
@@ -85,7 +87,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
     $scope.modalRegister.hide();
   };
 
-  $scope.accessToken = $rootScope.accessToken;
   // Open the login modal
   $scope.login = function(){
     $scope.modal.show();
@@ -113,35 +114,33 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
     });
     var req = {
                 method: 'post',
-                url: 'http://caqueta.travel/endpoint/user/login.json',
+                url: 'http://caqueta.travel/endpoint/user/login',
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                data: { 'username': $scope.loginData.username,
-                        'password': $scope.loginData.password
+                data: { "username": $scope.loginData.username,
+                        "password": $scope.loginData.password,
                       }
               };
     $http(req).success(function(data) {
-      $rootScope.accessToken = data.token;
-      $rootScope.sessid = data.sessid;
-      $rootScope.uid = data.user.uid;
       var alertPopup = $ionicPopup.alert({
           title: 'Inicio de sesión éxitoso',
           template: 'Bienvenido ' + $scope.loginData.username
         });
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function() {
-        $ionicLoading.hide();
-        $scope.closeLogin();
-      }, 10000);
-      $window.location.reload(true);
+      $rootScope.accessToken = data.token;
+      $rootScope.sessid = data.sessid;
+      $rootScope.uid = data.user.uid;
+      $state.go($state.current.name, {}, {reload: true});
     }).error(function(data, status) {
       var alertPopup = $ionicPopup.alert({
         title: 'Inicio de sesión fallido',
         template: 'Por favor revisa tus datos'
       });
     });
+    $timeout(function() {
+        $ionicLoading.hide();
+        $scope.closeLogin();
+      }, 1000);
   };
 
   //Perform the register user
@@ -158,12 +157,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
     if($scope.registerData.pass == $scope.registerData.confirmPass){
       var req = {
                 method: 'post',
-                url: 'http://caqueta.travel/endpoint/user',
+                url: 'http://caqueta.travel/endpoint/user/register',
                 headers: {
                   'Content-Type': 'application/json'
                 },
                     "name"    : $scope.registerData.usuario,
-                    "password": $scope.registerData.pass,
+                    "pass"    : $scope.registerData.pass,
                     "mail"    : $scope.registerData.mail,
               };
       $http(req).success(function(data) {
@@ -291,21 +290,33 @@ angular.module('starter.controllers', ['ionic', 'ngCordova', 'ngCordovaOauth'])
   };
 
   $scope.googleLogin = function() {
-    $cordovaOauth.google("657841967825-8q4ba5ko4vpthdn6oavlpncejof954h5.apps.googleusercontent.com",
-      ["https://www.googleapis.com/auth/urlshortener",
-      "https://www.googleapis.com/auth/userinfo.email"])
+    $cordovaOauth.google("179467797996-gmljn9g10dvvap5kol6nv7ksglfcpoli.apps.googleusercontent.com",
+      ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email"])
     .then(function(result) {
-        console.log(JSON.stringify(result));
+        var alertPopup = $ionicPopup.alert({
+          title: 'Inicio de sesión éxitoso',
+          template: 'Bienvenido ',
+        });
+        $state.go($state.current.name, {}, {reload: true});
+        $scope.accessToken = result.access_token;
+        $scope.closeLogin();
     }, function(error) {
         console.log(error);
     });
   };
 
   $scope.facebookLogin = function() {
-    $cordovaOauth.facebook("756712241131121", ["email"]).then(function(result) {
-        console.log(JSON.stringify(result));
-    }, function(error) {
-        console.log(error);
+
+    $cordovaOauth.facebook("1141662542534381", ["email", "public_profile"],
+      {redirect_uri: "http://localhost/callback"}).then(function(result){
+        displayData($http, result.access_token);
+        var alertPopup = $ionicPopup.alert({
+          title: 'Se agrego un nuevo favorito',
+          template: titleE + ' ha sido agregado a sus favoritos' + result
+        });
+    },  function(error){
+          alert("Error: " + error);
+          console.log(error);
     });
   };
 

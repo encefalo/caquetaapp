@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.encefalo.starter.caqueta;
+package com.encefalo.caqueta.travel;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
